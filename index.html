@@ -52,6 +52,13 @@
             transition: transform 0.2s;
         }
         button:hover { transform: scale(1.05); }
+        #spreadMsg {
+            display: none;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: #aaa;
+            padding: 0 1rem;
+        }
         #shareBtn {
             display: none;
             margin: 1rem auto 0;
@@ -116,6 +123,7 @@
             <button type="submit">Сурпрайз!</button>
         </form>
         <div id="message"></div>
+        <p id="spreadMsg"></p>
         <button id="shareBtn" onclick="shareToFB()">Facebook-д хуваалцах</button>
     </div>
 
@@ -185,6 +193,8 @@
                         msgEl.textContent = `${name} Таньд ${msg}`;
                         msgEl.classList.add("blessing");
                         launchFireworks();
+                        document.getElementById("spreadMsg").textContent = "Ерөөлөө бусдадаа ч түгээгээрэй 👇";
+                        document.getElementById("spreadMsg").style.display = "block";
                         document.getElementById("shareBtn").style.display = "block";
                         running = false;
                     }, 700);
