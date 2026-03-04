@@ -209,12 +209,30 @@
             const siteUrl = "https://tuguldur0107.github.io/surprise-app/";
             const shareText = text + "\n\n🎉 Чи ч ерөөлөө аваарай 👉 " + siteUrl;
             if (navigator.share) {
-                navigator.share({ text: shareText }).catch(() => {});
-            } else {
-                navigator.clipboard.writeText(shareText).then(() => {
-                    alert("Хуулагдлаа! Facebook дээр paste хийгээрэй.");
+                navigator.share({ text: shareText }).catch(() => {
+                    fallbackShare(shareText);
                 });
+            } else {
+                fallbackShare(shareText);
             }
+        }
+        function fallbackShare(text) {
+            try {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert("Хуулагдлаа! Facebook дээр paste хийгээрэй.");
+                }).catch(() => { manualCopy(text); });
+            } catch(e) {
+                manualCopy(text);
+            }
+        }
+        function manualCopy(text) {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            alert("Хуулагдлаа! Facebook дээр paste хийгээрэй.");
         }
 
         // Fireworks
