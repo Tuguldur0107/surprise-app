@@ -124,7 +124,7 @@
         </form>
         <div id="message"></div>
         <p id="spreadMsg"></p>
-        <button id="shareBtn" onclick="shareToFB()">Facebook-д хуваалцах</button>
+        <button id="shareBtn" onclick="shareToFB()">Хуваалцах</button>
     </div>
 
     <script>
@@ -208,8 +208,13 @@
             const text = document.getElementById("message").textContent;
             const siteUrl = "https://tuguldur0107.github.io/surprise-app/";
             const shareText = text + "\n\n🎉 Чи ч ерөөлөө аваарай 👉 " + siteUrl;
-            const url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(siteUrl) + "&quote=" + encodeURIComponent(shareText);
-            window.open(url, "_blank", "width=600,height=400");
+            if (navigator.share) {
+                navigator.share({ text: shareText }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert("Хуулагдлаа! Facebook дээр paste хийгээрэй.");
+                });
+            }
         }
 
         // Fireworks
